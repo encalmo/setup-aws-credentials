@@ -17,7 +17,7 @@ or with SCALA-CLI
 Insert into your bash script to request and export local AWS credentials.
 
 ```
-$(scala run --dependency=org.encalmo::setup-aws-credentials:0.9.0 --quiet -- --profile encalmo)
+$(scala run --dependency=org.encalmo::setup-aws-credentials:0.9.0 --main-class=org.encalmo.aws.SetupAwsCredentials --quiet -- --profile encalmo)
 ```
 
 ## Test
