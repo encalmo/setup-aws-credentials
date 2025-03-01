@@ -32,6 +32,7 @@ object SetupAwsCredentials {
             |export AWS_SECRET_ACCESS_KEY=${credentials.secretAccessKey}
             |export AWS_SESSION_TOKEN=${credentials.sessionToken}
             |export AWS_PROFILE=${credentials.profile}
+            |export AWS_DEFAULT_REGION=${credentials.defaultRegion}
             """.stripMargin
         )
     )
@@ -67,6 +68,10 @@ object SetupAwsCredentials {
 
       val awsConfigOpt: Option[AwsConfig] = readAwsConfig(awsConfigFile, verbose)
 
+      val defaultRegion: String = awsConfigOpt
+        .flatMap(_.getProfileProperty(profile, "region"))
+        .getOrElse("us-east-1")
+
       if (!awsConfigOpt.exists(_.getProfile(profile).isDefined))
       then
         Left(
@@ -97,10 +102,10 @@ object SetupAwsCredentials {
             case Some(credentials) if (credentials.expiration > (System.currentTimeMillis() - 5000L)) =>
               if (credentials.accountId == accountId && credentials.roleName == roleName)
               then Right(credentials)
-              else computeNewCredentials(accountId, roleName, profile, loginProfile, verbose)
+              else computeNewCredentials(accountId, roleName, profile, loginProfile, defaultRegion, verbose)
 
             case _ =>
-              computeNewCredentials(accountId, roleName, profile, loginProfile, verbose)
+              computeNewCredentials(accountId, roleName, profile, loginProfile, defaultRegion, verbose)
           }
         } yield effectiveCredentials
       }
@@ -113,6 +118,7 @@ object SetupAwsCredentials {
       roleName: String,
       profile: String,
       loginProfile: String,
+      defaultRegion: String,
       verbose: Boolean
   ): Either[String, Credentials] = {
     val credentials =
@@ -125,7 +131,8 @@ object SetupAwsCredentials {
             expiration = c.roleCredentials.expiration,
             accountId = accountId,
             roleName = roleName,
-            profile = profile
+            profile = profile,
+            defaultRegion = defaultRegion
           )
         )
     // save new credentials in a file
@@ -245,7 +252,8 @@ object SetupAwsCredentials {
       expiration: Long,
       accountId: String,
       roleName: String,
-      profile: String
+      profile: String,
+      defaultRegion: String
   ) derives ReadWriter {
 
     def toEnvironmentVariables: Map[String, String] =
@@ -253,7 +261,8 @@ object SetupAwsCredentials {
         "AWS_ACCESS_KEY_ID" -> accessKeyId,
         "AWS_SECRET_ACCESS_KEY" -> secretAccessKey,
         "AWS_SESSION_TOKEN" -> sessionToken,
-        "AWS_PROFILE" -> profile
+        "AWS_PROFILE" -> profile,
+        "AWS_DEFAULT_REGION" -> defaultRegion
       )
   }
 
