@@ -33,6 +33,7 @@ object SetupAwsCredentials {
             |export AWS_SESSION_TOKEN=${credentials.sessionToken}
             |export AWS_PROFILE=${credentials.profile}
             |export AWS_DEFAULT_REGION=${credentials.defaultRegion}
+            |export AWS_REGION=${credentials.defaultRegion}
             """.stripMargin
         )
     )
@@ -262,7 +263,8 @@ object SetupAwsCredentials {
         "AWS_SECRET_ACCESS_KEY" -> secretAccessKey,
         "AWS_SESSION_TOKEN" -> sessionToken,
         "AWS_PROFILE" -> profile,
-        "AWS_DEFAULT_REGION" -> defaultRegion
+        "AWS_DEFAULT_REGION" -> defaultRegion,
+        "AWS_REGION" -> defaultRegion
       )
   }
 
