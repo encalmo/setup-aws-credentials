@@ -1,3 +1,5 @@
+![Maven Central Version](https://img.shields.io/maven-central/v/org.encalmo/setup-aws-credentials_3?style=for-the-badge)
+
 # setup-aws-credentials
 
 Scala 3 utility to programatically compute AWS credentials using AWS CLI and AWS SSO. 
