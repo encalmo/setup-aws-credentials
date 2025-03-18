@@ -4,6 +4,8 @@
 
 Scala 3 utility to programatically compute AWS credentials using AWS CLI and AWS SSO. 
 
+## Dependencies
+
 ## Usage
 
 Use with SBT

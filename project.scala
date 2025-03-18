@@ -1,6 +1,6 @@
 //> using scala 3.3.5
 //> using exclude scripts
-//> using dep org.encalmo::script-utils:0.9.0
+//> using dep org.encalmo::script-utils:0.9.1
 //> using toolkit 0.7.0
 //> using publish.organization "org.encalmo"
 //> using publish.name "setup-aws-credentials"
