@@ -6,7 +6,8 @@ Scala 3 utility to programatically compute AWS credentials using AWS CLI and AWS
 
 ## Dependencies
 
-   - [Scala](https://www.scala-lang.org/) >= 3.3.5
+   - [Scala](https://www.scala-lang.org) >= 3.3.5
+   - [Scala **toolkit** 0.7.0](https://github.com/scala/toolkit)
    - org.encalmo [**script-utils** 0.9.1](https://central.sonatype.com/artifact/org.encalmo/script-utils_3)
 
 ## Usage
